@@ -1,9 +1,6 @@
 
 import edu.princeton.cs.algs4.BinaryStdIn;
 import edu.princeton.cs.algs4.BinaryStdOut;
-import edu.princeton.cs.algs4.MinPQ;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /*
  * Copyright (C) 2019 Michael <GrubenM@GMail.com>
@@ -81,47 +78,45 @@ public class BurrowsWheeler {
     public static void inverseTransform() {
         // Read the index of the original string in the sorted t[] array.
         int first = BinaryStdIn.readInt();
-
-        // Instantiate a Priority Queue to assist in sorting the characters in t[]
-        MinPQ<Pair<Character, Integer>> q = new MinPQ();
+        BinaryStdOut.write(first);
+        BinaryStdOut.flush();
         
-        // Instantiate an array to use for counting character occurrences.  
-        // Presume full 8-bit ASCII
-        int[] r = new int[256];
+        // Instantiate an array to use in key-indexed counting.
+        // Presume 8-bit ASCII, then +1 because key-indexed counting
+        int R = 256;
+        int[] count = new int[R+1];
         
-        // Instantiate a counter to use for the rows of the t[] array
-        int i = 0;
-        
-        // Instantiate a map from the particular character to the row in the
-        // t[] array on which it occurred
-        HashMap<Pair<Character, Integer>, Integer> m = new HashMap<>();
-        
-        while (!BinaryStdIn.isEmpty()) {
-            char c = BinaryStdIn.readChar();
-            Pair<Character, Integer> p = new Pair<>(c, r[c]);
-            q.insert(p);
-            r[c]++;
-            m.put(p, i++);
+        // 1. Traverse over the t[] array, and count the character frequencies
+        String inString = BinaryStdIn.readString();
+        for (int i = 0; i < inString.length(); i++) {
+            char c = inString.charAt(i);
+            count[c+1]++;
         }
         
-        i = 0;
-        ArrayList<Pair<Character, Integer>> sorted = new ArrayList<>(q.size());
-        while (!q.isEmpty()) { 
-            sorted.add(i++, q.delMin());
+        // 2. Compute the cumulate counts
+        for (int r = 0; r < R; r++) {
+            count[r+1] += count[r];
         }
         
+        // 3. Move items into an auxiliary array (this is the sort)
+        // Also maintain an array of the moves (the next[] array)
+        // to traverse in the final step.
+        char[] aux = new char[inString.length()];
+        int[] next = new int[inString.length()];
+        for (int i = 0; i < inString.length(); i++) {
+            char c = inString.charAt(i);
+            aux[count[c]] = c;
+            next[count[c]] = i;
+            count[c]++;
+        }
+                
+        // 4. Traverse the next[] array to rebuild the initial string.
         int ptr = first;
-        StringBuilder sb = new StringBuilder();
-        while (sb.length() < sorted.size()) { 
-            Pair<Character, Integer> p = sorted.get(ptr);
-            char c = p.getLeft();
-            sb.append(c);
-            ptr = m.get(p);
+        for (int i = 0; i < inString.length(); i++) {
+            BinaryStdOut.write(aux[ptr]);
+            ptr = next[ptr];
         }
-        
-        BinaryStdOut.write(sb.toString());
         BinaryStdOut.close();
-        
     }
 
     // if args[0] is '-', apply Burrows-Wheeler transform
