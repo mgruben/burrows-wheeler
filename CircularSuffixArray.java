@@ -1,6 +1,7 @@
 
 import edu.princeton.cs.algs4.StdOut;
-import edu.princeton.cs.algs4.SuffixArray;
+import java.util.Arrays;
+import java.util.Comparator;
 
 /*
  * Copyright (C) 2019 Michael <GrubenM@GMail.com>
@@ -24,7 +25,8 @@ import edu.princeton.cs.algs4.SuffixArray;
  * @author Michael <GrubenM@GMail.com>
  */
 public class CircularSuffixArray {
-    private final SuffixArray sa;
+    private final int length;
+    private final Integer[] index;
     
     // circular suffix array of s
     public CircularSuffixArray(String s) {
@@ -32,25 +34,42 @@ public class CircularSuffixArray {
             throw new java.lang.IllegalArgumentException(
                     "Constructor cannot be null");
         }
-        sa = new SuffixArray(s);
+        length = s.length();
+        index = new Integer[length];
+        
+        // Initialize the suffix array with the index of the character
+        // that should start this row of the suffix array.
+        for (int i = 0; i < length; i++) {
+            index[i] = i;
+        }
+        
+        Arrays.sort(index, (Integer t, Integer t1) -> {
+            for (int i = 0; i < length; i++) {
+                char c = s.charAt((t + i) % length);
+                char c1 = s.charAt((t1 + i) % length);
+                if (c < c1) return -1;
+                if (c > c1) return 1;
+            }
+            return (int) Math.signum(t1 - t);            
+        });
     }
     
     // length of s
     public int length() {
-        return sa.length();
+        return length;
     }
     
     // returns index of ith sorted suffix
     public int index(int i) {
-        if (i < 0 || i >= sa.length()) {
+        if (i < 0 || i >= length) {
             throw new java.lang.IllegalArgumentException(
                     "i must be in the range of [0,s.length())");
         }
-        return sa.index(i);
+        return index[i];
     }
     
     public static void main(String[] args) {
-        String s = "abracadabra!";
+        String s = "BBBBABBBBB";
         CircularSuffixArray csa = new CircularSuffixArray(s);
         
         // should print 12
