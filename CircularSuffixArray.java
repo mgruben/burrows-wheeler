@@ -1,7 +1,6 @@
 
 import edu.princeton.cs.algs4.StdOut;
 import java.util.Arrays;
-import java.util.Comparator;
 
 /*
  * Copyright (C) 2019 Michael <GrubenM@GMail.com>
@@ -34,6 +33,7 @@ public class CircularSuffixArray {
             throw new java.lang.IllegalArgumentException(
                     "Constructor cannot be null");
         }
+        
         length = s.length();
         index = new Integer[length];
         
@@ -45,7 +45,7 @@ public class CircularSuffixArray {
         
         Arrays.sort(index, (Integer t, Integer t1) -> {
             for (int i = 0; i < length; i++) {
-                // Indices in 'index' should be compared based on the character
+                // Entries in 'index' should be compared based on the character
                 // in 's' to which they map, allowing wrap-around.
                 char c = s.charAt((t + i) % length);
                 char c1 = s.charAt((t1 + i) % length);
@@ -80,14 +80,13 @@ public class CircularSuffixArray {
         String s = "BBBBABBBBB";
         CircularSuffixArray csa = new CircularSuffixArray(s);
         
-        // should print 12
+        // should print (s.length())
         StdOut.println(csa.length());
         
-        int[] a = new int[12];
+        int[] a = new int[s.length()];
         for (int i = 0; i < s.length(); i++) {
             a[i] = csa.index(i);
             StdOut.println("Index of " + i + " is " + a[i]);
         }
-        
     }
 }
