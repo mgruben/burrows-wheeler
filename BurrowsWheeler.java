@@ -78,8 +78,6 @@ public class BurrowsWheeler {
     public static void inverseTransform() {
         // Read the index of the original string in the sorted t[] array.
         int first = BinaryStdIn.readInt();
-        BinaryStdOut.write(first);
-        BinaryStdOut.flush();
         
         // Instantiate an array to use in key-indexed counting.
         // Presume 8-bit ASCII, then +1 because key-indexed counting
