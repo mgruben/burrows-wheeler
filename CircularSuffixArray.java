@@ -45,12 +45,20 @@ public class CircularSuffixArray {
         
         Arrays.sort(index, (Integer t, Integer t1) -> {
             for (int i = 0; i < length; i++) {
+                // Indices in 'index' should be compared based on the character
+                // in 's' to which they map, allowing wrap-around.
                 char c = s.charAt((t + i) % length);
                 char c1 = s.charAt((t1 + i) % length);
+                
+                // Break early if we encounter a different character
                 if (c < c1) return -1;
                 if (c > c1) return 1;
+                // But if we don't encounter a different character,
+                // move on to the next character in the shifted string.
             }
-            return (int) Math.signum(t1 - t);            
+            // If we're here; the strings were the same.  
+            // Break ties by comparing the actual indices themselves.
+            return t.compareTo(t1);
         });
     }
     
