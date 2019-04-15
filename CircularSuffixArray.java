@@ -1,5 +1,5 @@
 
-import static edu.princeton.cs.algs4.StdOut.println;
+import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.SuffixArray;
 
 /*
@@ -29,7 +29,8 @@ public class CircularSuffixArray {
     // circular suffix array of s
     public CircularSuffixArray(String s) {
         if (s == null) {
-            throw new java.lang.IllegalArgumentException("Constructor cannot be null");
+            throw new java.lang.IllegalArgumentException(
+                    "Constructor cannot be null");
         }
         sa = new SuffixArray(s);
     }
@@ -42,7 +43,8 @@ public class CircularSuffixArray {
     // returns index of ith sorted suffix
     public int index(int i) {
         if (i < 0 || i >= sa.length()) {
-            throw new java.lang.IllegalArgumentException("i must be in the range of [0,s.length())");
+            throw new java.lang.IllegalArgumentException(
+                    "i must be in the range of [0,s.length())");
         }
         return sa.index(i);
     }
@@ -52,12 +54,12 @@ public class CircularSuffixArray {
         CircularSuffixArray csa = new CircularSuffixArray(s);
         
         // should print 12
-        println(csa.length());
+        StdOut.println(csa.length());
         
         int[] a = new int[12];
         for (int i = 0; i < s.length(); i++) {
             a[i] = csa.index(i);
-            println("Index of " + i + " is " + a[i]);
+            StdOut.println("Index of " + i + " is " + a[i]);
         }
         
     }

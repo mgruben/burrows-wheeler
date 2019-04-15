@@ -27,7 +27,8 @@ import java.util.HashMap;
  * @author Michael <GrubenM@GMail.com>
  */
 public class BurrowsWheeler {
-    // apply Burrows-Wheeler transform, reading from standard input and writing to standard output
+    // apply Burrows-Wheeler transform, reading from standard input and writing
+    // to standard output
     public static void transform() {
         // Read the string to Burrows-Wheeler transform from standard input
         String inString = BinaryStdIn.readString();
@@ -35,13 +36,13 @@ public class BurrowsWheeler {
         // Construct a CircularSuffixArray from the input string
         CircularSuffixArray csa = new CircularSuffixArray(inString);
         
-        // Initialize pointers to help construct the correct Burrows-Wheeler response
+        // Initialize pointers to help construct the Burrows-Wheeler response
         int index, first, prev;
         first = -1;
         StringBuilder sb = new StringBuilder();
         
         // Iterate over the rows in the sorted Circular Suffix Array
-        for (int i=0; i < inString.length(); i++) {
+        for (int i = 0; i < inString.length(); i++) {
             
             // Get this row's position in the unsorted Circular Suffix Array
             index = csa.index(i);
@@ -61,7 +62,8 @@ public class BurrowsWheeler {
         }
         
         // Catch situations where we haven't actually found first yet
-        if (first < 0) throw new java.lang.IllegalArgumentException("'first' is negative!");
+        if (first < 0) throw new java.lang.IllegalArgumentException(
+                "'first' is negative!");
         
         // Write the index of the original string in the sorted Circular Suffix
         // Array to standard out.
@@ -74,7 +76,8 @@ public class BurrowsWheeler {
         BinaryStdOut.close();
     }
 
-    // apply Burrows-Wheeler inverse transform, reading from standard input and writing to standard output
+    // apply Burrows-Wheeler inverse transform, reading from standard input
+    // and writing to standard output
     public static void inverseTransform() {
         // Read the index of the original string in the sorted t[] array.
         int first = BinaryStdIn.readInt();
@@ -93,7 +96,7 @@ public class BurrowsWheeler {
         // t[] array on which it occurred
         HashMap<Pair<Character, Integer>, Integer> m = new HashMap<>();
         
-        while (! BinaryStdIn.isEmpty()) {
+        while (!BinaryStdIn.isEmpty()) {
             char c = BinaryStdIn.readChar();
             Pair<Character, Integer> p = new Pair<>(c, r[c]);
             q.insert(p);
@@ -103,7 +106,7 @@ public class BurrowsWheeler {
         
         i = 0;
         ArrayList<Pair<Character, Integer>> sorted = new ArrayList<>(q.size());
-        while (! q.isEmpty()) { 
+        while (!q.isEmpty()) { 
             sorted.add(i++, q.delMin());
         }
         

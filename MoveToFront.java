@@ -25,7 +25,8 @@ import java.util.LinkedList;
  * @author Michael <GrubenM@GMail.com>
  */
 public class MoveToFront {
-    // apply move-to-front encoding, reading from standard input and writing to standard output
+    // apply move-to-front encoding, reading from standard input and writing
+    // to standard output
     public static void encode() {
         // Initialize a LinkedList in lexicographic order to store
         // the moved-to-front state
@@ -33,11 +34,11 @@ public class MoveToFront {
         
         // Iterate over each byte in the input stream
         int move_to_front_index;
-        while (! BinaryStdIn.isEmpty()) {
+        while (!BinaryStdIn.isEmpty()) {
             // Character is used because we expect 8 bytes.
             // During encoding, we expect that this Character represents
             // an ASCII character.
-            Character ascii_character = BinaryStdIn.readChar();
+            char ascii_character = BinaryStdIn.readChar();
             
             // Obtain the location of this character in our linked list,
             // then pop it and move it to the front.
@@ -52,7 +53,8 @@ public class MoveToFront {
         BinaryStdOut.close();
     }
 
-    // apply move-to-front decoding, reading from standard input and writing to standard output
+    // apply move-to-front decoding, reading from standard input and writing
+    // to standard output
     public static void decode() {
         // Initialize a LinkedList in lexicographic order to store
         // the moved-to-front state
@@ -60,11 +62,11 @@ public class MoveToFront {
         
         // Iterate over each byte in the input stream
         char ascii_character;
-        while (! BinaryStdIn.isEmpty()) {
+        while (!BinaryStdIn.isEmpty()) {
             // Character is used because we expect 8 bytes.
             // During decoding, we expect that this Character represents
             // a numerical index into the move-to-front index.
-            Character move_to_front_index = BinaryStdIn.readChar();
+            char move_to_front_index = BinaryStdIn.readChar();
             
             // Obtain the character at this location in our linked list,
             // then pop it and move it to the front.

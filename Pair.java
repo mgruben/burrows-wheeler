@@ -21,41 +21,52 @@
  * @param <L>
  * @param <R>
  */
-public class Pair<L extends Comparable<L>, R extends Comparable<R>> implements Comparable<Pair<L,R>> {
+public class Pair<L extends Comparable<L>, R extends Comparable<R>>
+        implements Comparable<Pair<L, R>> {
 
-  private final L left;
-  private final R right;
+    private final L left;
+    private final R right;
 
-  public Pair(L left, R right) {
-    this.left = left;
-    this.right = right;
-  }
+    public Pair(L left, R right) {
+        this.left = left;
+        this.right = right;
+    }
 
-  public L getLeft() { return left; }
-  public R getRight() { return right; }
+    public L getLeft() {
+        return left;
+    }
 
-  @Override
-  public int hashCode() { return left.hashCode() ^ right.hashCode(); }
+    public R getRight() {
+        return right;
+    }
 
-  @Override
-  public boolean equals(Object o) {
-    if (!(o instanceof Pair)) return false;
-    Pair pairo = (Pair) o;
-    return this.left.equals(pairo.getLeft()) &&
-           this.right.equals(pairo.getRight());
-  }
-  
-  @Override
-  public String toString(){
-      return String.format("(" + left + "," + right + ")");
-  }
+    @Override
+    public int hashCode() {
+        return left.hashCode() ^ right.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Pair)) {
+            return false;
+        }
+        Pair pairo = (Pair) o;
+        return this.left.equals(pairo.getLeft())
+                && this.right.equals(pairo.getRight());
+    }
+
+    @Override
+    public String toString() {
+        return String.format("(" + left + "," + right + ")");
+    }
 
     @Override
     public int compareTo(Pair<L, R> t) {
         int i = left.compareTo(t.left);
-        if (i == 0) return right.compareTo(t.right);
+        if (i == 0) {
+            return right.compareTo(t.right);
+        }
         return i;
     }
 
 }
-
