@@ -23,6 +23,13 @@ import java.util.LinkedList;
  * @author Michael <GrubenM@GMail.com>
  */
 public class Radix {
+    // Use a linked list to represent the 256 extended ASCII characters
+    // in lexicographic order.
+    //
+    // This linked list supports O(n) search and removal, and
+    // O(1) append-to-front operations.
+    //
+    // This makes it an excellent data structure for move-to-front encoding.
     public static LinkedList<Character> getAsciiLinkedList() {
         LinkedList<Character> ll = new LinkedList<>();
         for (char c = 0; c < 256; c++) {
